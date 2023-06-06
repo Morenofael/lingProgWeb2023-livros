@@ -15,11 +15,12 @@ if(isset($_POST['submetido'])) {
     $genero = isset($_POST['genero']) ? $_POST['genero'] : null;
     $qtdPaginas = isset($_POST['qtdPaginas']) ? 
                         $_POST['qtdPaginas'] : null;
+    $autor = isset($_POST['autor']) ? $_POST['autor'] : null;
 
-    $sql = 'INSERT INTO livros (titulo, genero, qtd_paginas)' .
-        ' VALUES (?, ?, ?)';
+    $sql = 'INSERT INTO livros (titulo, genero, qtd_paginas, autor)' .
+        ' VALUES (?, ?, ?, ?)';
     $stmt = $conn->prepare($sql);
-    $stmt->execute([$titulo, $genero, $qtdPaginas]);
+    $stmt->execute([$titulo, $genero, $qtdPaginas, $autor]);
 
     header("location: livros.php");
 }
@@ -42,7 +43,10 @@ if(isset($_POST['submetido'])) {
             placeholder="Informe o título" />
 
         <br><br>
+        <input type="text" name="autor" 
+            placeholder="Informe o autor" />
 
+        <br><br>
         <select name="genero">
             <option value="">---Selecione o gênero---</option>
             <option value="D">Drama</option>
@@ -77,6 +81,7 @@ if(isset($_POST['submetido'])) {
         <tr>
             <td>ID</td>
             <td>Título</td>
+            <td>autor</td>
             <td>Gênero</td>
             <td>Páginas</td>
             <td></td>
@@ -86,6 +91,7 @@ if(isset($_POST['submetido'])) {
             <tr>
                 <td> <?php echo $reg['id'] ?> </td>
                 <td> <?php echo $reg['titulo'] ?> </td>
+                <td> <?php echo $reg['autor'] ?> </td>
                 <td> 
                 <?php 
                     switch($reg['genero']) {
